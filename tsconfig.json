@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "paths": {
+      "@ml/*": ["./ml/*"],
+      "@db/*": ["./prisma/*"],
+      "@type/*": ["./types/*"],
+      "@utils/*": ["./utils/*"],
+      "@pages/*": ["./pages/*"],
+      "@scripts/*": ["./scripts/*"],
+      "@api/*": ["./pages/api/*"],
+      "@workers/*": ["./workers/*"],
+      "@components/*": ["./components/*"],
+      "@generated/*": ["./components/generated/ui/*"]
+    }
+  },
+  "include": ["./types/*.d.ts", "**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"]
+}

@@ -1,0 +1,32 @@
+version: "3"
+services:
+  # Database
+  database:
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - db:/var/lib/postgresql/data
+  # SMTP service
+  smtp:
+    image: mailhog/mailhog
+    ports:
+      - 1025:1025
+      - 8025:8025
+  # Web service
+  web:
+    image: web
+    build:
+      dockerfile: ./Dockerfile.dev
+    ports:
+      - 3000:3000
+    links:
+      - database
+      - smtp
+volumes:
+  db:
+    driver: local

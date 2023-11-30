@@ -1,0 +1,8 @@
+# Defaults
+**/.git
+**/.svn
+**/.hg
+**/node_modules
+
+# NextJS
+.next

@@ -1,0 +1,46 @@
+FROM node:18-alpine as base
+
+# Setup pnpm
+RUN apk add --no-cache libc6-compat
+RUN corepack enable && corepack prepare pnpm@8.7.5 --activate
+
+# Install dependencies only when needed
+FROM base as deps
+
+# Setup directory
+WORKDIR /app
+
+# Install dependencies
+COPY package.json pnpm-lock.yaml* ./
+RUN pnpm i --frozen-lockfile
+
+# Rebuild source code as needed
+FROM base as builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+COPY .env.sample .env
+RUN npx prisma generate
+RUN pnpm run build
+
+# Runner
+FROM base as runner
+WORKDIR /app
+ENV NODE_ENV production
+ENV NEXT_TELEMETRY_DISABLED 1
+
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+
+COPY --from=builder /app/public ./public
+
+# Automatically leverage output traces to reduce image size
+# https://nextjs.org/docs/advanced-features/output-file-tracing
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+# Run
+USER nextjs
+EXPOSE 3000
+ENV PORT 3000
+CMD ["node", "server.js"]

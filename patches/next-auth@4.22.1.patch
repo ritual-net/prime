@@ -1,0 +1,12 @@
+diff --git a/adapters.d.ts b/adapters.d.ts
+index e198f17fd4b01b1a7cacff6a1d1ee14264e2dbcc..3662afa90c5ef72bef5dad07e392da7562e61b3f 100644
+--- a/adapters.d.ts
++++ b/adapters.d.ts
+@@ -2,7 +2,6 @@ import { Account, User, Awaitable } from ".";
+ export interface AdapterUser extends User {
+     id: string;
+     email: string;
+-    emailVerified: Date | null;
+ }
+ export interface AdapterAccount extends Account {
+     userId: string;
