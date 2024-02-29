@@ -42,7 +42,7 @@ export default function Home({
   return (
     <Layout session={session}>
       <Sizer>
-        {/* CreateCTA if priveleged */}
+        {/* CreateCTA if privileged */}
         {userCanCreate && <CreateCTA push={push} />}
 
         {/* Header */}
@@ -67,7 +67,7 @@ export default function Home({
         {/* Servers */}
         <div className="flex bg-zinc-100 border-2 border-zinc-200 p-8 rounded-sm">
           {/* Default: no servers found */}
-          {servers.length == 0 && <EmptyState canCreate={userCanCreate} />}
+          {servers.length === 0 && <EmptyState canCreate={userCanCreate} />}
 
           {/* Some servers exist */}
           {servers.length > 0 && <ServerList servers={servers} push={push} />}
